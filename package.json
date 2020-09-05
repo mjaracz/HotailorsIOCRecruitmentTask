@@ -1,0 +1,48 @@
+{
+  "name": "test-function",
+  "description": "",
+  "version": "",
+  "scripts": {
+    "prebuild": "npm run lint",
+    "build": "tsc",
+    "build:production": "npm run prestart && npm prune --production",
+    "watch": "tsc --w",
+    "prestart": "npm run build && func extensions install",
+    "start:host": "func start",
+    "start": "npm run start:verbose & npm run watch",
+    "start:verbose": "func start --verbose",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "lint": "tslint -c ./tslint/tslint.json --project ./tsconfig.json",
+    "lint:fix": "tslint -c ./tslint/tslint.json --project ./tsconfig.json --fix",
+    "lint:rebuild:rules": "tsc ./tslint/rules/underscorePrivatesRule.ts --lib \"es6\" && tsc ./tslint/rules/uppercaseStaticReadonlyRule.ts --lib \"es6\""
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "azure-storage": "^2.10.2",
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.0.3",
+    "@types/jest": "^26.0.13",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "HttpTrigger",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
